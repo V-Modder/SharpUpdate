@@ -10,7 +10,7 @@ namespace SharpUpdate
     /// <summary>
     /// Provides application update support in C#
     /// </summary>
-    public class SharpUpdater
+    public class SharpUpdater : IDisposable
     {
         /// <summary>
         /// Holds the program-to-update's info
@@ -162,6 +162,18 @@ namespace SharpUpdate
             Info.CreateNoWindow = true;
             Info.FileName = "cmd.exe";
             Process.Start(Info);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (bgWorker.IsBusy)
+                bgWorker.CancelAsync();
         }
     }
 }

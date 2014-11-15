@@ -23,7 +23,7 @@
         private string tempFile;
 
         /// <summary>
-        /// Creates a new SharpUpdater object
+        /// Creates a new SharpUpdateFileInfo object
         /// </summary>
         internal SharpUpdateFileInfo(string url, string fileName, string md5)
         {
@@ -58,7 +58,6 @@
             get { return md5; }
             //set { md5 = value; }
         }
-
 
         /// <summary>
         /// Path to the downloaded file

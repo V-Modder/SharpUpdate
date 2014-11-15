@@ -29,7 +29,7 @@ namespace SharpUpdate
         private int count = 0;
 
         /// <summary>
-        /// Gets the list of alltemp files path for the downloaded files
+        /// Gets the list of all temp file paths for the downloaded files
         /// </summary>
         internal List<SharpUpdateFileInfo> TempFilesPath
         {
@@ -53,7 +53,12 @@ namespace SharpUpdate
 
             this.files = files;
 
-            this.progressBarAll.Maximum = files.Count;
+            // Calculate the overall size and save it to progressBarAll
+            this.progressBarAll.Maximum = 0;
+            foreach (SharpUpdateFileInfo fi in this.files)
+            {
+                this.progressBarAll.Maximum += Convert.ToInt32(getSizeOfFile(fi.Url));
+            }
 
             // Set the temp file name and create new 0-byte file
             files[count].TempFile = Path.GetTempFileName();
@@ -74,15 +79,45 @@ namespace SharpUpdate
         }
 
         /// <summary>
+        /// Get the size of a file
+        /// </summary>
+        /// <param name="location">URL to the file</param>
+        /// <returns>Size of file in bytes</returns>
+        private static long getSizeOfFile(string location)
+        {
+            try
+            {
+                WebRequest req = HttpWebRequest.Create(location);
+                req.Method = "HEAD";
+                WebResponse resp = req.GetResponse();
+                long ContentLength;
+                if (long.TryParse(resp.Headers.Get("Content-Length"), out ContentLength))
+                {
+                    resp.Close();
+                    return ContentLength;
+                }
+                resp.Close();
+                return 0;
+            }
+            catch { return 0; }
+        }
+
+        /// <summary>
         /// Downloads file from server
         /// </summary>
         private void webClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            // Update progressbar on download
-            this.lblProgress.Text = String.Format("Downloaded {0} of {1}", FormatBytes(e.BytesReceived, 1, true), FormatBytes(e.TotalBytesToReceive, 1, true));
+            // Update progressbars on download
+            this.lblProgress.Text = String.Format("Downloaded {0} of {1}", FormatBytes(e.BytesReceived, 1, true), FormatBytes(progressBarAll.Maximum, 1, true));
             this.progressBar.Value = e.ProgressPercentage;
+            this.progressBarAll.Value = Convert.ToInt32(e.BytesReceived);
         }
 
+        /// <summary>
+        /// Setup webClient to download the next file or start hashing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void webClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             if (e.Error != null)
@@ -181,6 +216,11 @@ namespace SharpUpdate
             return String.Format(formatString, newBytes);
         }
 
+        /// <summary>
+        /// Hash file and compare
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">string[2] {FILENAME, MD5}</param>
         private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             string file = ((string[])e.Argument)[0];
@@ -193,6 +233,11 @@ namespace SharpUpdate
                 e.Result = DialogResult.OK;
         }
 
+        /// <summary>
+        /// Check if all files are ok and start next
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if ((DialogResult)e.Result != DialogResult.OK)

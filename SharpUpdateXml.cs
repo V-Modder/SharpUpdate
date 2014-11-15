@@ -32,6 +32,7 @@ namespace SharpUpdate
             get { return description; }
             //set { description = value; }
         }
+
         /// <summary>
         /// All files that are available
         /// </summary>
@@ -156,7 +157,7 @@ namespace SharpUpdate
 
                 return new SharpUpdateXml(version, files, description, launchArgs);
             }
-            catch(Exception ee)
+            catch
             { return null; }
         }
     }
