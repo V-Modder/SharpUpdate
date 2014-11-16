@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Globalization;
+using System.Resources;
 
 namespace SharpUpdate
 {
@@ -20,9 +22,11 @@ namespace SharpUpdate
                 this.Icon = applicationInfo.ApplicationIcon;
 
             // Fill in the UI
-            this.Text = applicationInfo.ApplicationName + " - Update Info";
-            this.lblVersions.Text = String.Format("Current Version: {0}\nUpdate version: {1}", applicationInfo.ApplicationAssembly.GetName().Version.ToString(),
+
+            this.Text = applicationInfo.ApplicationName + " " + SharpUpdate.LanguageFile._default.SharpUpdateInfoForm_Title;
+            this.lblVersions.Text = String.Format(SharpUpdate.LanguageFile._default.SharpUpdateInfoForm_Version, applicationInfo.ApplicationAssembly.GetName().Version.ToString(),
                 updateInfo.Version.ToString());
+            this.lblDescription.Text = SharpUpdate.LanguageFile._default.SharpUpdateInfoForm_lblDescription;
             this.txtDescription.Text = updateInfo.Description;
         }
 

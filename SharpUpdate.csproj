@@ -44,6 +44,16 @@
   <ItemGroup>
     <Compile Include="Hasher.cs" />
     <Compile Include="ISharpUpdatable.cs" />
+    <Compile Include="LanguageFile\Res.en-En.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Res.en-En.resx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageFile\default.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>default.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -73,6 +83,15 @@
     <Compile Include="SharpUpdateXml.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="LanguageFile\Res.en-En.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Res.en-En.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageFile\default.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>default.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -88,6 +107,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="Resources\update.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

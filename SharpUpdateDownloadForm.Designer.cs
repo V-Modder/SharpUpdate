@@ -36,13 +36,13 @@
             // 
             // lblDownloading
             // 
-            this.lblDownloading.AutoSize = true;
-            this.lblDownloading.Font = new System.Drawing.Font("Segoe UI", 24F);
-            this.lblDownloading.Location = new System.Drawing.Point(35, 35);
+            this.lblDownloading.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDownloading.Location = new System.Drawing.Point(12, 21);
             this.lblDownloading.Name = "lblDownloading";
-            this.lblDownloading.Size = new System.Drawing.Size(343, 45);
+            this.lblDownloading.Size = new System.Drawing.Size(389, 45);
             this.lblDownloading.TabIndex = 0;
-            this.lblDownloading.Text = "Downloading Update...";
+            this.lblDownloading.Text = "Update wird heruntergeladen...";
+            this.lblDownloading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // progressBar
             // 
@@ -86,7 +86,6 @@
             this.Text = "Downloading Update";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SharpUpdateDownloadForm_FormClosed);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

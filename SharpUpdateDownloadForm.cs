@@ -29,6 +29,11 @@ namespace SharpUpdate
         private int count = 0;
 
         /// <summary>
+        /// Counting recieved bytes over multiple files
+        /// </summary>
+        private int bytesRecievedLastTime = 0;
+
+        /// <summary>
         /// Gets the list of all temp file paths for the downloaded files
         /// </summary>
         internal List<SharpUpdateFileInfo> TempFilesPath
@@ -52,6 +57,7 @@ namespace SharpUpdate
                 this.Icon = programIcon;
 
             this.files = files;
+            this.lblDownloading.Text = SharpUpdate.LanguageFile._default.SharpUpdateDownloadForm_lblDownloading;
 
             // Calculate the overall size and save it to progressBarAll
             this.progressBarAll.Maximum = 0;
@@ -108,9 +114,10 @@ namespace SharpUpdate
         private void webClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             // Update progressbars on download
-            this.lblProgress.Text = String.Format("Downloaded {0} of {1}", FormatBytes(e.BytesReceived, 1, true), FormatBytes(progressBarAll.Maximum, 1, true));
             this.progressBar.Value = e.ProgressPercentage;
-            this.progressBarAll.Value = Convert.ToInt32(e.BytesReceived);
+            this.progressBarAll.Value += (Convert.ToInt32(e.BytesReceived) - this.bytesRecievedLastTime);
+            this.bytesRecievedLastTime = Convert.ToInt32(e.BytesReceived);
+            this.lblProgress.Text = String.Format(SharpUpdate.LanguageFile._default.SharpUpdateDownloadForm_DownloadProgress, FormatBytes(progressBarAll.Value, 1, true), FormatBytes(progressBarAll.Maximum, 1, true));
         }
 
         /// <summary>
@@ -133,7 +140,7 @@ namespace SharpUpdate
             else
             {
                 this.progressBar.Value = 0;
-                this.progressBarAll.Value++;
+                this.bytesRecievedLastTime = 0;
                 if (this.count < files.Count)
                 {
                     // Set the temp file name and create new 0-byte file
@@ -156,7 +163,7 @@ namespace SharpUpdate
                 else
                 {
                     // Show the "Hashing" label and set the progressbar to marquee
-                    this.lblProgress.Text = "Verifying Download...";
+                    this.lblProgress.Text = SharpUpdate.LanguageFile._default.SharpUpdateDownloadForm_DownloadsFinished;
                     this.progressBar.Style = ProgressBarStyle.Marquee;
                     this.count = 0;
 

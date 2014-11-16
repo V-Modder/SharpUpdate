@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Resources;
 
 namespace SharpUpdate
 {
@@ -118,11 +120,11 @@ namespace SharpUpdate
             }
             else if (result == DialogResult.Abort)
             {
-                MessageBox.Show("The update download was cancelled.\nThis program has not been modified.", "Update Download Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(SharpUpdate.LanguageFile._default.SharpUpdater_DownloadCancelled, SharpUpdate.LanguageFile._default.SharpUpdater_DownloadCancelledTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("There was a problem downloading the update.\nPlease try again later.", "Update Download Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(SharpUpdate.LanguageFile._default.SharpUpdater_DownloadProblem, SharpUpdate.LanguageFile._default.SharpUpdater_DownloadProblemTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Globalization;
+using System.Resources;
 
 namespace SharpUpdate
 {
@@ -22,7 +24,7 @@ namespace SharpUpdate
         /// The update info display form
         /// </summary>
         private SharpUpdateInfoForm updateInfoForm;
-
+        
         /// <summary>
         /// Creates a new SharpUpdateAcceptForm
         /// </summary>
@@ -31,18 +33,26 @@ namespace SharpUpdate
         internal SharpUpdateAcceptForm(ISharpUpdatable applicationInfo, SharpUpdateXml updateInfo)
         {
             InitializeComponent();
-
-            this.applicationInfo = applicationInfo;
-            this.updateInfo = updateInfo;
-
-            this.Text = this.applicationInfo.ApplicationName + " - Update Available";
-
+            try
+            {
+                this.applicationInfo = applicationInfo;
+                this.updateInfo = updateInfo;
+                this.Text = this.applicationInfo.ApplicationName + " " + SharpUpdate.LanguageFile._default.SharpUpdateAcceptForm_Title;
+                this.lblUpdateAvail.Text = SharpUpdate.LanguageFile._default.SharpUpdateAcceptForm_lblUpdateAvail;
+                this.lblNewVersion.Text = String.Format(SharpUpdate.LanguageFile._default.SharpUpdateAcceptForm_lblNewVersion, this.updateInfo.Version.ToString());
+                this.btnYes.Text = SharpUpdate.LanguageFile._default.SharpUpdateAcceptForm_btnYes;
+                this.btnNo.Text = SharpUpdate.LanguageFile._default.SharpUpdateAcceptForm_btnNo;
+                this.btnDetails.Text = SharpUpdate.LanguageFile._default.SharpUpdateAcceptForm_btnDetails;
+            }
+            catch (Exception ee)
+            {
+                int dds = 0;
+            }
             // Assigns the icon if it isn't null
             if (this.applicationInfo.ApplicationIcon != null)
                 this.Icon = this.applicationInfo.ApplicationIcon;
 
             // Adds the update version # to the form
-            this.lblNewVersion.Text = String.Format("New Version: {0}", this.updateInfo.Version.ToString());
         }
 
         private void btnYes_Click(object sender, EventArgs e)

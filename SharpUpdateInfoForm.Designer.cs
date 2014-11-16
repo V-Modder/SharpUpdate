@@ -48,7 +48,7 @@
             // 
             // lblVersions
             // 
-            this.lblVersions.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVersions.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVersions.Location = new System.Drawing.Point(104, 25);
             this.lblVersions.Name = "lblVersions";
             this.lblVersions.Size = new System.Drawing.Size(168, 54);
