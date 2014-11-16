@@ -10,7 +10,7 @@ I added the functionality, to update **multiple** files.
 How to use
 ----------
 
-This is the great thing about the project is, it is simply to use.
+The great thing about the project is, it is simply to use.
 
     1. Reference your project to SharpUpdate
     2. Inherit the ISharpUpdatable Interface to your main class
@@ -21,9 +21,9 @@ Example
 -------
 
 ```
-using System;</br>
-...</br>
-using SharpUpdate;</br>
+using System;
+...
+using SharpUpdate;
 
 namespace MainFormNamespace
 {
