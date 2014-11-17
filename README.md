@@ -39,7 +39,7 @@ namespace MainFormNamespace
     ```
     <?xml version="1.0" encoding="UTF-8"?>
     <sharpUpdate>
-       <update appId="InfosystemYourBackoffice">
+       <update appId="UniqueIDforYourProgram">
             <version>"Version"</version>
             <file>
                 <url>"URLtoYourFile"</url>
