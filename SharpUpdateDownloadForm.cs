@@ -58,7 +58,7 @@ namespace SharpUpdate
 
             this.files = files;
             this.lblDownloading.Text = SharpUpdate.LanguageFile._default.SharpUpdateDownloadForm_lblDownloading;
-
+            this.Text = SharpUpdate.LanguageFile._default.SharpUpdateDownloadForm_Title;
             // Calculate the overall size and save it to progressBarAll
             this.progressBarAll.Maximum = 0;
             foreach (SharpUpdateFileInfo fi in this.files)
@@ -66,7 +66,7 @@ namespace SharpUpdate
                 this.progressBarAll.Maximum += Convert.ToInt32(getSizeOfFile(fi.Url));
             }
 
-            // Set the temp file name and create new 0-byte file
+            // Set the first file to download
             files[count].TempFile = Path.GetTempFileName();
 
             // Set up WebClient to download file
@@ -142,7 +142,7 @@ namespace SharpUpdate
                 this.progressBar.Value = 0;
                 this.bytesRecievedLastTime = 0;
                 if (this.count < files.Count)
-                {
+                {// Set the next file to download
                     // Set the temp file name and create new 0-byte file
                     files[count].TempFile = Path.GetTempFileName();
 
@@ -161,7 +161,7 @@ namespace SharpUpdate
                     catch { this.DialogResult = DialogResult.No; this.Close(); }
                 }
                 else
-                {
+                {// Set the first file to hash
                     // Show the "Hashing" label and set the progressbar to marquee
                     this.lblProgress.Text = SharpUpdate.LanguageFile._default.SharpUpdateDownloadForm_DownloadsFinished;
                     this.progressBar.Style = ProgressBarStyle.Marquee;

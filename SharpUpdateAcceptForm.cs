@@ -37,7 +37,7 @@ namespace SharpUpdate
             {
                 this.applicationInfo = applicationInfo;
                 this.updateInfo = updateInfo;
-                this.Text = this.applicationInfo.ApplicationName + " " + SharpUpdate.LanguageFile._default.SharpUpdateAcceptForm_Title;
+                this.Text = SharpUpdate.LanguageFile._default.SharpUpdateAcceptForm_Title;
                 this.lblUpdateAvail.Text = SharpUpdate.LanguageFile._default.SharpUpdateAcceptForm_lblUpdateAvail;
                 this.lblNewVersion.Text = String.Format(SharpUpdate.LanguageFile._default.SharpUpdateAcceptForm_lblNewVersion, this.updateInfo.Version.ToString());
                 this.btnYes.Text = SharpUpdate.LanguageFile._default.SharpUpdateAcceptForm_btnYes;

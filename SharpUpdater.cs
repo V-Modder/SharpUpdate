@@ -24,13 +24,16 @@ namespace SharpUpdate
         /// </summary>
         private BackgroundWorker bgWorker;
 
-        /// <summary>
+        private bool doUpdate;
+        
         /// Creates a new SharpUpdater object
         /// </summary>
         /// <param name="applicationInfo">The info about the application so it can be displayed on dialog boxes to user</param>
-        public SharpUpdater(ISharpUpdatable applicationInfo)
+        /// <param name="doUpdate">Set weather the update should be applied or show ony</param>
+        public SharpUpdater(ISharpUpdatable applicationInfo, bool doUpdate=true)
         {
             this.applicationInfo = applicationInfo;
+            this.doUpdate = doUpdate;
 
             // Set up backgroundworker
             this.bgWorker = new BackgroundWorker();
@@ -68,10 +71,11 @@ namespace SharpUpdate
         /// <returns>Full path to the application to update</returns>
         private string AssemblyDirectory()
         {
-            string codeBase = this.applicationInfo.ApplicationAssembly.CodeBase;
-            UriBuilder uri = new UriBuilder(codeBase);
-            string path = Uri.UnescapeDataString(uri.Path);
-            return Path.GetDirectoryName(path);
+            //get the full location of the assembly with DaoTests in it
+            string fullPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+
+            //get the folder that's in
+            return Path.GetDirectoryName(fullPath);
         }
 
         /// <summary>
@@ -94,7 +98,16 @@ namespace SharpUpdate
                     {
                         // Ask to accept the update
                         if (new SharpUpdateAcceptForm(this.applicationInfo, update).ShowDialog(this.applicationInfo.Context) == DialogResult.Yes)
-                            this.DownloadUpdate(update); // Do the update
+                        {
+                            if (doUpdate)
+                                this.DownloadUpdate(update); // Do the update                            
+                            else
+                            {//This is not the only instance
+                                MessageBox.Show(SharpUpdate.LanguageFile._default.SharpUpdater_DoubleInstanceWarning,
+                                                SharpUpdate.LanguageFile._default.SharpUpdater_DoubleInstanceWarningTitle,
+                                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
                     }
                 }
             }

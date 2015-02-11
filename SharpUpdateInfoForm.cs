@@ -23,11 +23,12 @@ namespace SharpUpdate
 
             // Fill in the UI
 
-            this.Text = applicationInfo.ApplicationName + " " + SharpUpdate.LanguageFile._default.SharpUpdateInfoForm_Title;
+            this.Text = SharpUpdate.LanguageFile._default.SharpUpdateInfoForm_Title;
             this.lblVersions.Text = String.Format(SharpUpdate.LanguageFile._default.SharpUpdateInfoForm_Version, applicationInfo.ApplicationAssembly.GetName().Version.ToString(),
                 updateInfo.Version.ToString());
             this.lblDescription.Text = SharpUpdate.LanguageFile._default.SharpUpdateInfoForm_lblDescription;
             this.txtDescription.Text = updateInfo.Description;
+            this.btnBack.Text = SharpUpdate.LanguageFile._default.SharpUpdateInfoForm_btnBack;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
