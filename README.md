@@ -34,7 +34,7 @@ namespace MainFormNamespace
 
 ```
 
-###Upload your porject
+###Upload your project
 1. Create your upload.xml like so
     ```
     <?xml version="1.0" encoding="UTF-8"?>
